@@ -6,7 +6,7 @@ import Script from 'next/script';
 export default function Home() {
   const [requested, setRequested] = useState<Array<string>>();
 
-  function Request({ method, query }: { method: 'REFRESH'; query?: string }) {
+  function Request({ method, query }: { method: 'REFRESH'; query: string }) {
     fetch(`https://demo.whitelabelmd.com/drugbank/direct.php?q=${query}`, {
       method: 'GET',
     })
@@ -14,15 +14,13 @@ export default function Home() {
       .then((r: { status: string; details: string; data: Array<string> }) => setRequested(r.data));
   }
 
-  useEffect(() => Request({ method: 'REFRESH' }), []);
-
-  // useEffect(() => console.log(requested), [requested]);
+  useEffect(() => Request({ method: 'REFRESH', query: '' }), []);
 
   //////////////////////////////////////////////////
 
   const [input, setInput] = useState<Array<{ label: string; value: string }>>();
 
-  useEffect(() => console.table(input), [input]);
+  useEffect(() => console.log(JSON.stringify(input?.map((Itm) => Itm.value))), [input]);
 
   //////////////////////////////////////////////////
 
@@ -60,27 +58,16 @@ export default function Home() {
           onInputChange={(Ev) => Request({ method: 'REFRESH', query: Ev })}
         />
 
-        <Script id=''>
+        <Script id='JotFormCustomWidget'>
           {JFCustomWidget?.subscribe('ready', () => {
             JFCustomWidget?.subscribe('submit', () => {
               JFCustomWidget?.sendSubmit({
                 valid: true,
-                value: input,
+                value: JSON.stringify(input?.map((Itm) => Itm.value)),
               });
             });
           })}
         </Script>
-
-        {/* <script>
-          {JFCustomWidget.subscribe('ready', () => {
-            JFCustomWidget.subscribe('submit', () => {
-              JFCustomWidget.sendSubmit({
-                valid: true,
-                value: input,
-              });
-            });
-          })}
-        </script> */}
       </main>
     </>
   );
