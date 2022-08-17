@@ -20,8 +20,6 @@ export default function Home() {
 
   const [input, setInput] = useState<Array<{ label: string; value: string }>>();
 
-  useEffect(() => console.log(JSON.stringify(input?.map((Itm) => Itm.value))), [input]);
-
   //////////////////////////////////////////////////
 
   const JFCustomWidget = globalThis?.window?.JFCustomWidget;
@@ -60,7 +58,14 @@ export default function Home() {
 
         <Script id='JotFormCustomWidget'>
           {JFCustomWidget?.subscribe('ready', () => {
+            console.log('ready');
+
+            const settings = JFCustomWidget.getWidgetSettings();
+            const medicines = JFCustomWidget.getWidgetSetting('medicines');
+
             JFCustomWidget?.subscribe('submit', () => {
+              console.log('test');
+
               JFCustomWidget?.sendSubmit({
                 valid: true,
                 value: JSON.stringify(input?.map((Itm) => Itm.value)),
