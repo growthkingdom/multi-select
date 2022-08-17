@@ -33,20 +33,30 @@ export default function Home() {
             };
           })}
           isMulti
-          name='myTextInput'
-          instanceId='myTextInput'
-          id='myTextInput'
+          name='multi-select'
+          instanceId='multi-select'
+          id='multi-select'
           isSearchable
           onChange={(Ev) => setInput([...Ev])}
           onInputChange={(Ev) => Request({ method: 'REFRESH', query: Ev })}
         />
 
+        <input
+          type='text'
+          id='text-input'
+          value={input ? input?.map((Itm) => Itm.value) : ''}
+          readOnly
+          className={styles.input}
+        />
+
         <Script id='' strategy='afterInteractive'>
           {`JFCustomWidget.subscribe('ready', () => {
             JFCustomWidget.subscribe('submit', () => {
+              console.log()
+
               JFCustomWidget.sendSubmit({
                 valid: true,
-                value: JSON.stringify(input?.map((Itm) => Itm.value)),
+                value: document.getElementById('text-input').value,
               });
             });
           })`}
