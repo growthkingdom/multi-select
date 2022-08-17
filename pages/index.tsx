@@ -22,23 +22,8 @@ export default function Home() {
 
   //////////////////////////////////////////////////
 
-  const JFCustomWidget = globalThis?.window?.JFCustomWidget;
-
   return (
     <>
-      <Script src='//js.jotform.com/JotFormCustomWidget.min.js' />
-
-      {/* <Script id='test'>
-        {window.JFCustomWidget.subscribe('ready', () => {
-          window.JFCustomWidget.subscribe('submit', () => {
-            window.JFCustomWidget.sendSubmit({
-              valid: true,
-              value: input,
-            });
-          });
-        })}
-      </Script> */}
-
       <main className={styles.c_main}>
         <Select
           options={requested?.map((Itm) => {
@@ -56,22 +41,15 @@ export default function Home() {
           onInputChange={(Ev) => Request({ method: 'REFRESH', query: Ev })}
         />
 
-        <Script id='JotFormCustomWidget'>
-          {JFCustomWidget?.subscribe('ready', () => {
-            console.log('ready');
-
-            const settings = JFCustomWidget.getWidgetSettings();
-            const medicines = JFCustomWidget.getWidgetSetting('medicines');
-
-            JFCustomWidget?.subscribe('submit', () => {
-              console.log('test');
-
-              JFCustomWidget?.sendSubmit({
+        <Script id='' strategy='afterInteractive'>
+          {`JFCustomWidget.subscribe('ready', () => {
+            JFCustomWidget.subscribe('submit', () => {
+              JFCustomWidget.sendSubmit({
                 valid: true,
                 value: JSON.stringify(input?.map((Itm) => Itm.value)),
               });
             });
-          })}
+          })`}
         </Script>
       </main>
     </>
