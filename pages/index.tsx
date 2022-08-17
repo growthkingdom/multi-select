@@ -11,7 +11,15 @@ export default function Home() {
       method: 'GET',
     })
       .then((r) => r.json())
-      .then((r: { status: string; details: string; data: Array<string> }) => setRequested(r.data));
+      .then((r: { status: string; details: string; data: Array<string> }) => {
+        if (r.status == 'success') {
+          setRequested(r.data);
+
+          return;
+        }
+
+        console.warn(r.status || 'Error processing the request');
+      });
   }
 
   useEffect(() => Request({ method: 'REFRESH', query: '' }), []);
@@ -26,12 +34,14 @@ export default function Home() {
     <>
       <main className={styles.c_main}>
         <Select
-          options={requested?.map((Itm) => {
-            return {
-              value: Itm,
-              label: Itm,
-            };
-          })}
+          options={requested
+            ?.map((Itm) => {
+              return {
+                value: Itm,
+                label: Itm,
+              };
+            })
+            .slice(0, 9)}
           isMulti
           name='multi-select'
           instanceId='multi-select'
