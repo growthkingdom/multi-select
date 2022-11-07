@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react';
+import Script from 'next/script';
+import { useState } from 'react';
 import Select from 'react-select';
 import styles from '../styles/home.module.scss';
-import Script from 'next/script';
-
-//////////////////////////////////////////////////
 
 export function MultiSelect({ uri }: { uri: string }) {
   const [requested, setRequested] = useState<Array<string>>();
@@ -26,11 +24,7 @@ export function MultiSelect({ uri }: { uri: string }) {
     }
   }
 
-  //////////////////////////////////////////////////
-
   const [input, setInput] = useState<Array<{ label: string; value: string }>>();
-
-  //////////////////////////////////////////////////
 
   return (
     <>
