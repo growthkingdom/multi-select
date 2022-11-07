@@ -43,8 +43,9 @@ export function MultiSelect({ uri }: { uri: string }) {
           instanceId='multi-select'
           id='multi-select'
           isSearchable
-          onChange={(Ev) => setInput([...Ev])}
-          onInputChange={(Ev) => Request({ method: 'REFRESH', query: Ev })}
+          onChange={(Evt) => setInput([...Evt])}
+          onInputChange={(Evt) => Request({ method: 'REFRESH', query: Evt })}
+          menuPlacement={'top'}
         />
 
         <input
