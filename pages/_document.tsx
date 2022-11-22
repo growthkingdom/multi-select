@@ -8,7 +8,7 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <Script src='//js.jotform.com/JotFormCustomWidget.min.js' strategy='beforeInteractive' />
+        <Script src='https://js.jotform.com/JotFormCustomWidget.min.js' strategy='beforeInteractive' />
       </body>
     </Html>
   );
